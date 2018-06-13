@@ -1,0 +1,8 @@
+# IDEA
+*.impl
+*.iml
+
+# PROJECT
+target/
+logs/
+*.log

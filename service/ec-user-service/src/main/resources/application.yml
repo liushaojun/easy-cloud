@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: db_user
+      host: localhost
+swagger:
+  exclude-path: /error,
