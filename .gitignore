@@ -1,7 +1,7 @@
 # IDEA
 *.impl
 *.iml
-
+.idea/
 # PROJECT
 target/
 logs/
