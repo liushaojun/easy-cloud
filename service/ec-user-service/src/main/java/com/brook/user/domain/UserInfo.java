@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -23,6 +24,7 @@ public class UserInfo {
 
   @Id
   @ApiModelProperty(value = "用户ID",example = "1",required = true)
+  @NotNull
   public Long id;
   @NotBlank
   @Indexed(unique = true)

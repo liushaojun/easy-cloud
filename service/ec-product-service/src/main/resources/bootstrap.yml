@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    config:
+      label: master
+      profile: ${SPRING_PROFILES_ACTIVE:dev}
+      discovery:
+        enabled: true
+        service-id: config-server
+eureka:
+  client:
+    service-url:
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/

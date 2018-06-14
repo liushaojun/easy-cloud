@@ -1,0 +1,25 @@
+server:
+  port: 8090
+spring:
+  jackson:
+    time-zone: GMT+8
+  datasource:
+      driver-class-name: org.h2.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+      url: jdbc:h2:mem:db_product
+      username: sa
+      hikari:
+         minimum-idle: 5
+         maximum-pool-size: 10
+         pool-name: hikari-pool
+      sql-script-encoding: UTF-8
+      schema: classpath:sql/schema.sql
+      data: classpath:sql/data.sql
+  jpa:
+    database: h2
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+swagger:
+  exclude-path: /error,
+

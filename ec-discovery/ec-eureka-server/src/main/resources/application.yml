@@ -1,0 +1,22 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: discovery-server
+  security:
+    user:
+      name: eureka
+      password: 123456
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      default-zone: http://eureka:123456@${spring.application.name}:${server.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+
+

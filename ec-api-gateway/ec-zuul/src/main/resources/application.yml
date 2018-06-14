@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: api-gateway
+zuul:
+  routes:
+     user:
+        path: /user/**
+        service-id: user-service
+     product:
+        path: /product/**
+        service-id: product-service
+eureka:
+  client:
+    service-url:
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/

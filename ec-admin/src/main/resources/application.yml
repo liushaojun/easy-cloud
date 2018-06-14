@@ -1,0 +1,25 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: admin-server
+  profiles:
+    active: dev
+
+# Discovery
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 5
+    service-url:
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+    endpoint:
+      health:
+        show-details: ALWAYS

@@ -1,7 +1,8 @@
+server:
+  port: 8081
 spring:
   data:
     mongodb:
-      database: db_user
-      host: localhost
+      uri: mongodb://localhost/db_user
 swagger:
   exclude-path: /error,

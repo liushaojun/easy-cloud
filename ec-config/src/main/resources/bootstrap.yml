@@ -1,0 +1,7 @@
+encrypt:
+#  key: easy-cloud # 对称加密必须配置
+  keyStore:
+    location: classpath:/config-server.jks
+    password: 123456
+    alias: easy-cloud
+    secret: 123456

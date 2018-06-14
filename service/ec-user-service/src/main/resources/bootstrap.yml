@@ -4,11 +4,10 @@ spring:
   cloud:
     config:
       label: master
-      profile: dev
+      profile: ${SPRING_PROFILES_ACTIVE:dev}
       discovery:
-        enabled: true
-        service-id: config-service
+        service-id: config-server
 eureka:
   client:
     service-url:
-      default-zone: http://localhost:8889/eureka/
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/
