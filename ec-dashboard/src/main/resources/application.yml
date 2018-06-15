@@ -18,3 +18,6 @@ eureka:
   client:
     service-url:
       default-zone: http://eureka:123456@discovery-server:8761/eureka/
+  instance:
+     metadata-map:
+        management.port: ${management.port:8081}
