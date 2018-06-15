@@ -8,8 +8,13 @@ spring:
           username: admin
           password: 123456
 
+turbine:
+  appConfig: product-service,user-service,consumer-ribbon
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: "'default'"
   # Eureka
-  eureka:
-    client:
-      service-url:
-        default-zone: http://eureka:123456@discovery-server:8761/eureka/
+eureka:
+  client:
+    service-url:
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/
