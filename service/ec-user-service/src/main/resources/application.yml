@@ -4,5 +4,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost/db_user
+
 swagger:
   exclude-path: /error,
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

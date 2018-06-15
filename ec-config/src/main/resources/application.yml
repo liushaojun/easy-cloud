@@ -4,12 +4,22 @@ spring:
   application:
     name: config-server
   cloud:
+    bus:
+      trace:
+        enabled: true
     config:
       server:
         git:
           uri: https://gitee.com/liushaojun/easy-cloud
           search-paths: config-repo
           force-pull: true
+  rabbitmq:
+    host: ubuntu-1
+    port: 30638
+    username: user
+    password: lmAUkdk9Vk
+
+
   boot:
     admin:
       client:

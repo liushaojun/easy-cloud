@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+#      label: master # git,svn 默认 master
+      profile: ${SPRING_PROFILES_ACTIVE:dev}
+      discovery:
+        service-id: config-server
+eureka:
+  client:
+    service-url:
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/

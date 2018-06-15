@@ -1,15 +1,28 @@
-spring:
-  application:
-    name: api-gateway
+
 zuul:
-  routes:
-     user:
-        path: /user/**
-        service-id: user-service
+  routes: # 默认 以 eureka 注册的服务名进行访问
+#    sensitiveHeaders: 如果需要下游Cookies ,headers 配置此敏感头
+     user-service: /user/** # Simple
+     config-server: /config/**
+#     user:
+#        path: /user/**
+#        service-id: user-service
      product:
         path: /product/**
         service-id: product-service
-eureka:
-  client:
-    service-url:
-      default-zone: http://eureka:123456@discovery-server:8761/eureka/
+#  retryable: true #开启重试
+management:
+  endpoints:
+    web:
+      exposure:
+        include: routes,filters
+swagger:
+  version: @project.version@
+  title: Easy Cloud Api Docs
+  contact:
+    name: Brook
+    email: dev@easy-cloud.com
+logging:
+  level:
+    root: info
+    com.netflix.turbine.monitor: debug

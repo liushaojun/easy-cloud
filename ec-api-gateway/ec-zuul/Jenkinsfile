@@ -1,0 +1,30 @@
+node {
+
+    withMaven(maven:'maven') {
+
+        stage('Checkout') {
+            echo "Checkout code from ..."
+            git url: 'https://gitee.com/liushaojun/easy-cloud.git', credentialsId: 'github-piomin', branch: 'master'
+        }
+
+        stage('Build') {
+            sh 'mvn clean install -DskipTests'
+
+            def pom = readMavenPom file:'pom.xml'
+            print pom.version
+            env.version = pom.version
+        }
+
+        stage('Image') {
+            dir ('ec-zuul') {
+                def app = docker.build "reg.harbor.com:8888/easy-cloud/ec-zuul:${env
+                .version}"
+                app.push()
+            }
+
+            echo "Build image finish."
+        }
+
+    }
+
+}

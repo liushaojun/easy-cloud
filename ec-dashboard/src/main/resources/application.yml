@@ -1,0 +1,15 @@
+server:
+  port: 9001
+spring:
+  boot:
+      admin:
+        client:
+          url: http://localhost:9000
+          username: admin
+          password: 123456
+
+  # Eureka
+  eureka:
+    client:
+      service-url:
+        default-zone: http://eureka:123456@discovery-server:8761/eureka/
