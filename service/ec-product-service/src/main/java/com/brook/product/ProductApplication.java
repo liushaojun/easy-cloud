@@ -1,12 +1,16 @@
 package com.brook.product;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * @author brook
  */
-@SpringCloudApplication
+@SpringBootApplication
+@EnableDiscoveryClient
+@RefreshScope
 public class ProductApplication {
 
   public static void main(String[] args) {

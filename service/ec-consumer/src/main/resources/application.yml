@@ -1,0 +1,46 @@
+server:
+  port: 8001
+eureka:
+  client:
+    service-url:
+      default-zone: "http://eureka:123456@discovery-server:8761/eureka/"
+spring:
+  application:
+    name: user-consumer
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#    自定义LoadBalancer  规则
+#user-service:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#user-service: # 不使用 Eureka
+#  ribbon:
+#    listOfServers: localhost:8081
+logging:
+  level:
+    com.brook.consumer.client: DEBUG
+
+feign:
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000

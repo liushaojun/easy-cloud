@@ -12,5 +12,9 @@
   <packaging>pom</packaging>
   <modules>
     <module>ec-user-service</module>
+    <module>ec-edge-service</module>
+    <module>ec-consumer</module>
+    <module>ec-product-service</module>
+    <module>ec-product-service-api</module>
   </modules>
 </project>

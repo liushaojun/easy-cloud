@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.brook.product.BaseTest;
 import com.brook.product.domain.ProductInfo;
+import com.brook.product.dto.ProductDTO;
+import com.brook.product.form.ProductForm;
 import com.brook.product.support.RestException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,13 +28,13 @@ public class ProductServiceTest  extends BaseTest {
   ProductService productService;
   @Test
   public void save() {
-    final ProductInfo info = productService.save(buildEntity());
+    final ProductDTO info = productService.save(buildEntity());
     assertThat(info).isNotNull()
         .hasFieldOrProperty("id");
   }
 
-  private ProductInfo buildEntity() {
-    ProductInfo info = new ProductInfo();
+  private ProductForm buildEntity() {
+    ProductForm info = new ProductForm();
     info.productName = "iPhoneX";
     info.price = BigDecimal.valueOf(8000);
     return info;
@@ -40,23 +42,22 @@ public class ProductServiceTest  extends BaseTest {
 
   @Test
   public void findById() {
-    ProductInfo info = productService.findById(1L);
+    ProductDTO info = productService.findById(1L);
     assertThat(info).isNotNull();
   }
 
   @Test
   public void findAll() {
-    final List<ProductInfo> userInfo = productService.findAll();
+    final List<ProductDTO> userInfo = productService.findAll();
     assertThat(userInfo).isNotEmpty();
   }
 
   @Test
   public void modify() {
-    ProductInfo info = new ProductInfo();
+    ProductForm info = new ProductForm();
     info.id = 1L;
     info.productName= "aa";
     info.price = BigDecimal.ZERO;
-    info.updateAt = LocalDateTime.now();
     productService.modify(info);
   }
 

@@ -1,0 +1,12 @@
+server:
+  port: 8989
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 123456
+eureka:
+  client:
+    service-url:
+      default-zone: http://eureka:123456@discovery-server:8761/eureka/

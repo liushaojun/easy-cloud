@@ -9,7 +9,7 @@ spring:
           password: 123456
 
 turbine:
-  appConfig: product-service,user-service,consumer-ribbon
+  appConfig: user-cusumer
   aggregator:
     clusterConfig: default
   clusterNameExpression: "'default'"
@@ -18,6 +18,3 @@ eureka:
   client:
     service-url:
       default-zone: http://eureka:123456@discovery-server:8761/eureka/
-  instance:
-     metadata-map:
-        management.port: ${management.port:8081}

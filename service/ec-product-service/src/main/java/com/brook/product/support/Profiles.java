@@ -1,4 +1,4 @@
-package com.brook.user.support;
+package com.brook.product.support;
 
 /**
  * @author Brook 😈

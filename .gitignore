@@ -5,4 +5,5 @@
 # PROJECT
 target/
 logs/
+*.log.*.gz
 *.log

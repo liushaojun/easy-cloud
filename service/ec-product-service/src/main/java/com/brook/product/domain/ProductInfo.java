@@ -1,6 +1,6 @@
 package com.brook.product.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.brook.product.dto.ProductStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -25,6 +26,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @DynamicInsert
 //@DynamicUpdate
+@Data
 public class ProductInfo {
 
   @Id
@@ -38,12 +40,10 @@ public class ProductInfo {
   public String remark;
   @ApiModelProperty(value = "产品价格", example = "8000", required = true)
   public BigDecimal price;
-  @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
   @ApiModelProperty(value = "更新日期", example = "2018-01-01 00:00:00")
   public LocalDateTime updateAt;
 
   @ApiModelProperty(value = "创建日期", example = "2018-01-01 00:00:00")
-  @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
   public LocalDateTime createAt;
   @Enumerated(EnumType.ORDINAL)
   public ProductStatus status;

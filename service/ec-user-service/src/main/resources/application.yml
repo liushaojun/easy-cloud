@@ -4,7 +4,16 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost/db_user
+  boot:
+      admin:
+        client:
+          url: http://localhost:9000
 
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1
 swagger:
   exclude-path: /error,
 management:
@@ -12,3 +21,8 @@ management:
     web:
       exposure:
         include: "*"
+logging:
+  file: ${spring.application.name}.log
+  level:
+    root: error
+    com.brook.user: info

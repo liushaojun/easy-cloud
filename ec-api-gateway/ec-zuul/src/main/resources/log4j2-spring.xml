@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration status="OFF" monitorInterval="30">
+
+  <properties>
+    <property name="LOG_PATH">./logs</property>
+    <property name="LOG_FILE">api-gateway</property>
+  </properties>
+  <appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level - %msg%n"
+        charset="UTF-8"/>
+    </Console>
+    <RollingRandomAccessFile name="FILE-INFO" fileName="${LOG_PATH}/${LOG_FILE}-info.log"
+      filePattern="${LOG_PATH}/${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz">
+      <PatternLayout
+        pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level [logger{50}:%l] [%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] - %msg%n"
+        charset="UTF-8"/>
+      <Filters>
+        <!---->
+        <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="24"/>
+        <SizeBasedTriggeringPolicy size="50 MB"/>
+      </Policies>
+
+      <DefaultRolloverStrategy>
+        <Delete basePath="logs" maxDepth="2">
+          <IfFileName glob="*${LOG_FILE}-info.*.log"/>
+          <IfLastModified age="48h"/> <!--保留48h-->
+        </Delete>
+      </DefaultRolloverStrategy>
+
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="FILE-ERROR" fileName="${LOG_PATH}/${LOG_FILE}-error.log"
+      filePattern="${LOG_PATH}/${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz">
+
+      <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout
+        pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level [logger{50}:%l] [%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] - %msg%n"
+        charset="UTF-8"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="24"/>
+        <SizeBasedTriggeringPolicy size="50 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="logs" maxDepth="2">
+          <IfFileName glob="*${LOG_FILE}-error.*.log"/>
+          <IfLastModified age="48h"/> <!--保留48h-->
+        </Delete>
+      </DefaultRolloverStrategy>
+
+    </RollingRandomAccessFile>
+  </appenders>
+  <loggers>
+    <AsyncLogger name="springfox" level="OFF"/>
+    <AsyncLogger name="com.brook" level="INFO"/>
+
+    <Logger name="com.**.dao" level="DEBUG"/>
+    <Logger name="com.**.repository" level="DEBUG"/>
+    <AsyncRoot level="INFO" includeLocation="true">
+      <AppenderRef ref="CONSOLE"/>
+      <AppenderRef ref="FILE-INFO"/>
+      <AppenderRef ref="FILE-ERROR"/>
+    </AsyncRoot>
+  </loggers>
+</configuration>
+
