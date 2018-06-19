@@ -4,11 +4,13 @@ import com.brook.consumer.domain.UserDTO;
 import com.google.common.collect.Lists;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Brook 😈
  * @since 2018/6/18
  */
+@Component
 public class UserClientFallback implements UserClient {
 
   public static final UserDTO DEFAULT_USER = new UserDTO();

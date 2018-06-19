@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
   @ApiOperation("Modify update info.")
   ProductDTO modify(@Validated @RequestBody ProductForm info);
 
-  @DeleteMapping(value = "/{id:\\d+}")
+  @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ApiOperation("Delete a product.")
   void delete(@PathVariable("id") Long id);

@@ -3,7 +3,9 @@ server:
 spring:
   application:
     name: edge-service
-
+  rabbitmq:
+    username: user
+    password: 123456
 eureka:
   client:
     service-url:

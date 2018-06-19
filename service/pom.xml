@@ -16,5 +16,6 @@
     <module>ec-consumer</module>
     <module>ec-product-service</module>
     <module>ec-product-service-api</module>
+    <module>ec-stream-sample</module>
   </modules>
 </project>

@@ -65,7 +65,61 @@ zuul:
 ```
 注意： `zuul.stripPrefix` 仅适用于 `zuul.prefix` 中设置的前缀。它对给定路由 `path` 中定义的前缀有影响。
 
-#### 开启熔断
+#### 自定义过滤器
+zuul 主要是通过过滤器去实现的。它的生命周期是 `PRE`,`ROUTING`,`POST` 和 `ERROR`.
+zuul 默认已经实现了很多过滤功能。如下：
+
+| 类型     | 顺序  | 过滤器                   | 功能                        |
+| :----: | :----: | ----------------------- | --------------------------  |
+| PRE     | -3   | ServletDetectionFilter  | 标记处理Servlet的类型         |
+| PRE     | -2   | Servlet30WrapperFilter  | 包装HttpServletRequest请求   |
+| PRE     | -1   | FormBodyWrapperFilter   | 包装请求体                    |
+| ROUTING | 1    | DebugFilter             | 标记调试标志                  |
+| ROUTING | 5    | PreDecorationFilter     | 处理请求上下文供后续使用        |
+| ROUTING | 10   | RibbonRoutingFilter     | ServiceId请求转发            |
+| ROUTING | 100  | SimpleHostRoutingFilter | url请求转发                  |
+| ROUTING | 500  | SendForwardFilter       | forward请求转发              |
+| POST    | 0    | SendErrorFilter         | 处理有错误的请求响应           |
+| POST    | 1000 | SendResponseFilter      | 处理正常的请求响应             |
+
+
+
+```
+@Component
+@Slf4j
+public class RateLimitFitler extends ZuulFilter {
+
+  RateLimiter LOCAL_RATE_LIMITER = RateLimiter.create(1000); // 1000 r/s
+  @Override
+  public String filterType() {
+    return FilterConstants.PRE_TYPE;
+  }
+
+  @Override
+  public int filterOrder() {
+    return FilterConstants.FORM_BODY_WRAPPER_FILTER_ORDER-1;
+  }
+
+  @Override
+  public boolean shouldFilter() {
+    return true;
+  }
+
+  @Override
+  public Object run() throws ZuulException {
+    // 限流
+    if(!LOCAL_RATE_LIMITER.tryAcquire()){
+      final RequestContext ctx = RequestContext.getCurrentContext();
+      ctx.setSendZuulResponse(false);
+      ctx.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
+      ctx.setResponseBody(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase());
+      ctx.set("success",false);
+    }
+    return null;
+  }
+}
+```
+#### 路由熔断
 
 
 ### FQA
@@ -80,3 +134,4 @@ management:
         include: routes,filters
 ```
 然后访问 `/actuator/routes` 就出现配置的路由了。
+

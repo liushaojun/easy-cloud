@@ -8,6 +8,7 @@ import com.brook.consumer.domain.MessageDto;
 import com.brook.consumer.domain.UserDTO;
 import com.brook.product.dto.ProductDTO;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +58,20 @@ public class GreetController {
 
   }
 
+  @HystrixCommand(fallbackMethod = "defaultMessage")
   @GetMapping("/message")
   public MessageDto message() {
     return edgeClient.message();
   }
 
+  public MessageDto defaultMessage(){
+    MessageDto dto = new MessageDto();
+    dto.setId(0L);
+    dto.setCreateAt(LocalDateTime.now());
+    dto.setEnabled(false);
+    dto.setName("默认消息");
+    return dto;
+  }
   // 加入容错机制
   @HystrixCommand(fallbackMethod = "defaultUser")
   @GetMapping("/user/{id}")

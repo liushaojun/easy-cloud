@@ -1,0 +1,11 @@
+server:
+  port: 8099
+spring:
+  rabbitmq:
+    username: user
+    password: 123456
+  cloud:
+    stream:
+      bindings:
+       message-input:
+          group: my-group # 自定义组

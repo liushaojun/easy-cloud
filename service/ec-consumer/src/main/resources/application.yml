@@ -4,6 +4,9 @@ eureka:
   client:
     service-url:
       default-zone: "http://eureka:123456@discovery-server:8761/eureka/"
+  instance:
+    metadata-map:
+      cluster: CONSUMER
 spring:
   application:
     name: user-consumer
@@ -30,7 +33,7 @@ feign:
     response:
       enabled: true
   hystrix:
-    enabled: false
+    enabled: true
   client:
     config:
       default:

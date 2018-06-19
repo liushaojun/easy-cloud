@@ -5,6 +5,9 @@ spring:
     name: admin-server
   profiles:
     active: dev
+  output:
+    ansi:
+      enabled: always
 
 # Discovery
 eureka:

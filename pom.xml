@@ -29,7 +29,6 @@
     <module>service</module>
     <module>ec-api-gateway</module>
     <module>ec-common</module>
-    <module>ec-zipkin-ui</module>
     <module>ec-turbine-stream</module>
   </modules>
   <repositories>
@@ -56,6 +55,7 @@
         <artifactId>swagger-spring-boot-starter</artifactId>
         <version>${spring4all.swagger.version}</version>
       </dependency>
+
       <dependency>
         <groupId>com.brook</groupId>
         <artifactId>ec-common</artifactId>

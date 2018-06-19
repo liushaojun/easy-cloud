@@ -1,18 +1,21 @@
 package com.brook.consumer.client;
 
-import com.brook.product.api.ProductApi;
 import com.brook.product.dto.ProductDTO;
 import com.brook.product.form.ProductForm;
 import com.google.common.collect.Lists;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Brook 😈
  * @since 2018/6/18
  */
-public class ProductClientFallback implements ProductApi {
+@Component
+@RequestMapping("/fallback/product")
+public class ProductClientFallback implements ProductClient {
 
   static final  ProductDTO DEFAULT_PRODUCT = new ProductDTO();
   static {

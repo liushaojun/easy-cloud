@@ -1,6 +1,8 @@
 server:
   port: 9001
 spring:
+  application:
+    name: dashboard
   boot:
       admin:
         client:
@@ -9,10 +11,11 @@ spring:
           password: 123456
 
 turbine:
-  appConfig: user-cusumer
+  appConfig: user-consumer,edge-service
   aggregator:
     clusterConfig: default
   clusterNameExpression: "'default'"
+
   # Eureka
 eureka:
   client:
