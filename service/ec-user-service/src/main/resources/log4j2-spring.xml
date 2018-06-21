@@ -3,7 +3,7 @@
 
   <properties>
     <property name="LOG_PATH">./logs</property>
-    <property name="LOG_FILE">edge-service</property>
+    <property name="LOG_FILE">user-service</property>
   </properties>
   <appenders>
     <Console name="CONSOLE" target="SYSTEM_OUT">
@@ -55,7 +55,7 @@
   </appenders>
   <loggers>
     <AsyncLogger name="springfox" level="OFF"/>
-    <AsyncLogger name="com.brook" level="INFO"/>
+    <AsyncLogger name="com.brook.user" level="INFO"/>
 
     <Logger name="com.**.dao" level="DEBUG"/>
     <Logger name="com.**.repository" level="DEBUG"/>

@@ -1,36 +1,32 @@
 spring:
   application:
-    name: eureka-service-ha
+    name: discover-server-ha
+server:
+  port: 8761
+eureka:
+  instance:
+    prefer-ip-address: true
+---
+spring:
+  profiles: eureka1
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://eureka3:${server.port}/eureka/,http://eureka2:${server.port}/eureka/"
+---
+spring:
+  profiles: eureka2
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: "http://eureka1:${server.port}/eureka/,http://eureka3:${server.port}/eureka/"
+
 ---
 server:
   port: 8761
 spring:
-  profiles: peer1
+  profiles: eureka3
 eureka:
-  instance:
-    hostname: peer1
   client:
     serviceUrl:
-      defaultZone: http://peer2:8762/eureka/,http://peer3:8763/eureka/
----
-server:
-  port: 8762
-spring:
-  profiles: peer2
-eureka:
-  instance:
-    hostname: peer2
-  client:
-    serviceUrl:
-      defaultZone: http://peer1:8761/eureka/,http://peer3:8763/eureka/
----
-server:
-  port: 8763
-spring:
-  profiles: peer3
-eureka:
-  instance:
-    hostname: peer3
-  client:
-    serviceUrl:
-      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+      defaultZone: "http://eureka1:${server.port}/eureka/,http://eureka2:${server.port}/eureka/"

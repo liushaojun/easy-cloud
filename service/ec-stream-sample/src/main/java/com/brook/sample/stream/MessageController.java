@@ -21,6 +21,6 @@ public class MessageController {
     final Message<MessageDTO> message =
         MessageBuilder.withPayload(new MessageDTO(1,"Test a stream message."))
         .build();
-    pip.input().send(message);
+    pip.output().send(message);
   }
 }

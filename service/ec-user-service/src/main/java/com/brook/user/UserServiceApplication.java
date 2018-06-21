@@ -1,5 +1,6 @@
 package com.brook.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringCloudApplication
 @RefreshScope
 @RestController
+@Slf4j
 public class UserServiceApplication {
 
   @GetMapping("/greet")
   public String greet() {
+    log.info("Greet hello.");
     return "hello ,greet!";
   }
 

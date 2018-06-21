@@ -3,14 +3,16 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost/db_user
+      uri: mongodb://${MONGODB_HOST:localhost}/db_user
   boot:
-      admin:
-        client:
-          url: http://localhost:9000
+    admin:
+      client:
+        instance:
+          service-url: http://admin:9000
+        url:  ${ADMIN_URI:http://admin:9000}
 
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://${ZIPKIN_HOST:localhost}:9411
   sleuth:
     sampler:
       probability: 1
@@ -21,8 +23,4 @@ management:
     web:
       exposure:
         include: "*"
-logging:
-  file: ${spring.application.name}.log
-  level:
-    root: error
-    com.brook.user: info
+

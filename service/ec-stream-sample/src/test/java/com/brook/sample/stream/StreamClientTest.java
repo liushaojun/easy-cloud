@@ -2,13 +2,16 @@ package com.brook.sample.stream;
 
 import static org.junit.Assert.assertEquals;
 
+import com.brook.sample.stream.client.MessageProcessor;
 import com.brook.sample.stream.client.StreamClient;
+import com.brook.sample.stream.model.MessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.annotation.DirtiesContext;
@@ -30,6 +33,16 @@ public class StreamClientTest {
   @Autowired
   private MessageCollector messageCollector;
 
+  @Autowired
+  MessageProcessor messageProcessor;
+
+  @Test
+  public void sendMessage(){
+    final Message<MessageDTO> message =
+        MessageBuilder.withPayload(new MessageDTO(1, "Test a stream message."))
+            .build();
+    messageProcessor.output().send(message);
+  }
   @Test
   public void whenSendMessage_thenResponseIsInOutput() {
     whenSendMessage(1);

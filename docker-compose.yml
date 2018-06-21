@@ -1,0 +1,132 @@
+version: '3'
+services:
+  user:
+    build: ./service/ec-user-service
+    ports:
+      - "8081:8081"
+    links:
+      - eureka3
+      - mongodb
+
+  config:
+    build: ./ec-config
+    ports:
+      - "8888:8888"
+    environment:
+      - "spring.profiles.active=docker"
+    volumes:
+          - "/tmp/logs:/app/logs"
+    links:
+      - eureka1
+      - eureka2
+      - eureka3
+      - rabbitmq
+      - admin
+  api-gateway:
+     build: ./ec-api-gateway/ec-zuul
+     ports:
+      - "8080:8080"
+     volumes:
+      - "/tmp/logs:/app/logs"
+     links:
+      - eureka1
+      - eureka2
+      - eureka3
+      - zipkin
+  dashboard:
+     build: ./ec-dashboard
+     ports:
+       - "9001:9001"
+     links:
+       - eureka1
+       - eureka2
+       - eureka3
+       - admin
+  turbine:
+     build: ./ec-turbine-stream
+     ports:
+       - "8099:8099"
+     links:
+       - eureka1
+       - eureka2
+       - eureka3
+       - rabbitmq
+  admin:
+    build: ./ec-admin
+    ports:
+      - "9000:9000"
+    environment:
+      - "spring.profiles.active=docker"
+    volumes:
+      - "/tmp/logs:/app/logs"
+    links:
+      - eureka1
+      - eureka2
+      - eureka3
+  eureka1:
+    build: ./ec-discovery/ec-eureka-server-ha/
+    working_dir: /app
+    expose:
+      - "8761"
+    volumes:
+      - "/tmp/logs:/app/logs"
+    environment:
+      - "spring.profiles.active=eureka1"
+  eureka2:
+    build: ./ec-discovery/ec-eureka-server-ha/
+    working_dir: /app
+    expose:
+      - "8761"
+    links:
+      - eureka1
+    volumes:
+      - "/tmp/logs:/app/logs"
+    environment:
+      - "spring.profiles.active=eureka2"
+  eureka3:
+    build: ./ec-discovery/ec-eureka-server-ha/
+    working_dir: /app
+    expose:
+      - "8761"
+    ports:
+      - "8761:8761"
+    links:
+      - eureka1
+      - eureka2
+      - "admin: admin-server"
+    volumes:
+      - "/tmp/logs:/app/logs"
+    environment:
+      - "spring.profiles.active=eureka3"
+
+  mysql:
+    image: msyql:5.7
+    volumes:
+    - ~/data/mysql/data:/var/lib/mysql
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+  mongodb:
+    image: mongo:3.6.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/data/mongo/data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    hostname: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=123456
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+    - 9411:9411
