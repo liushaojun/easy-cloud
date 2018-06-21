@@ -93,7 +93,6 @@ services:
     links:
       - eureka1
       - eureka2
-      - "admin: admin-server"
     volumes:
       - "/tmp/logs:/app/logs"
     environment:
