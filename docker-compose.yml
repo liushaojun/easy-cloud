@@ -48,9 +48,7 @@ services:
        - "8099:8099"
      links:
        - eureka1
-       - eureka2
-       - eureka3
-       - rabbitmq
+       - discovery-server
   admin:
     build: ./ec-admin
     ports:
@@ -60,43 +58,17 @@ services:
     volumes:
       - "/tmp/logs:/app/logs"
     links:
-      - eureka1
-      - eureka2
-      - eureka3
-  eureka1:
+      - discovery-server
+  discovery-server:
     build: ./ec-discovery/ec-eureka-server-ha/
-    working_dir: /app
-    expose:
-      - "8761"
-    volumes:
-      - "/tmp/logs:/app/logs"
-    environment:
-      - "spring.profiles.active=eureka1"
-  eureka2:
-    build: ./ec-discovery/ec-eureka-server-ha/
-    working_dir: /app
-    expose:
-      - "8761"
-    links:
-      - eureka1
-    volumes:
-      - "/tmp/logs:/app/logs"
-    environment:
-      - "spring.profiles.active=eureka2"
-  eureka3:
-    build: ./ec-discovery/ec-eureka-server-ha/
-    working_dir: /app
     expose:
       - "8761"
     ports:
       - "8761:8761"
-    links:
-      - eureka1
-      - eureka2
     volumes:
       - "/tmp/logs:/app/logs"
     environment:
-      - "spring.profiles.active=eureka3"
+      - "spring.profiles.active=eureka1"
 
   mysql:
     image: msyql:5.7
