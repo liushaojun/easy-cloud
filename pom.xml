@@ -21,6 +21,9 @@
     <spring-cloud.version>Finchley.RC2</spring-cloud.version>
     <spring4all.swagger.version>1.7.0.RELEASE</spring4all.swagger.version>
     <guava.version>20.0</guava.version>
+    <dozer.version>6.2.0</dozer.version>
+    <disruptor.version>3.3.6</disruptor.version>
+    <swagger.annotaion>1.5.14</swagger.annotaion>
   </properties>
   <modules>
     <module>ec-admin</module>
@@ -70,12 +73,12 @@
       <dependency>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-annotations</artifactId>
-        <version>1.5.14</version>
+        <version>${swagger.annotaion}</version>
       </dependency>
       <dependency>
         <groupId>com.github.dozermapper</groupId>
         <artifactId>dozer-core</artifactId>
-        <version>6.2.0</version>
+        <version>${dozer.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -85,7 +88,7 @@
       <dependency>
         <groupId>com.lmax</groupId>
         <artifactId>disruptor</artifactId>
-        <version>3.3.6</version>
+        <version>${disruptor.version}</version>
       </dependency>
       <dependency>
         <groupId>de.codecentric</groupId>
