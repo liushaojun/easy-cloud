@@ -4,6 +4,8 @@ zuul:
 #    sensitiveHeaders: 如果需要下游Cookies ,headers 配置此敏感头
      user-service: /user/** # Simple
      config-server: /config/**
+     consumer-servie: /consumer/**
+     edge-service: /edge/**
 #     user:
 #        path: /user/**
 #        service-id: user-service

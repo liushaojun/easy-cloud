@@ -4,8 +4,8 @@ VOLUME /tmp
 ADD target/ec-config*.jar /app.jar
 EXPOSE 8888
 WORKDIR /app
-ENV EUREKA_URI http://eureka1:8761/eureka,http://eureka2:8761/eureka,http://eureka2:8761/eureka
-ENV ADMIN_URI http://admin:9000
+ENV EUREKA_URL http://discovery-server:8761/eureka
+ENV ADMIN_URL http://admin-server:9000
 ENV RABBITMQ_HOST rabbitmq
 
 ENTRYPOINT ["java","-jar","/app.jar"]

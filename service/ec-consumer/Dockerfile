@@ -2,10 +2,9 @@ FROM java:openjdk-8
 MAINTAINER brook liushaojunvip@sina.com
 
 WORKDIR /app
-ADD target/ec-turbine-stream*.jar /app.jar
+ADD target/ec-consumer*.jar /app.jar
 VOLUME /tmp/logs:/app/logs
-EXPOSE 9001
+EXPOSE 8001
 ENV EUREKA_URL http://discovery-server:8761/eureka
-ENV ADMIN_URL http://admin:9000
 
 ENTRYPOINT ["java","-jar","/app.jar"]

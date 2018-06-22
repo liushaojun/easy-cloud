@@ -8,8 +8,8 @@ spring:
     admin:
       client:
         instance:
-          service-url: http://admin:9000
-        url:  ${ADMIN_URI:http://admin:9000}
+          service-url: http://admin-server:9000
+        url:  ${ADMIN_URL:http://localhost:9000}
 
   zipkin:
     base-url: http://${ZIPKIN_HOST:localhost}:9411

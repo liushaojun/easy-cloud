@@ -1,6 +1,7 @@
 server:
   port: 8090
 spring:
+
   jackson:
     time-zone: GMT+8
   datasource:
@@ -23,3 +24,8 @@ spring:
 swagger:
   exclude-path: /error,
 
+  zipkin:
+    base-url: http://${ZIPKIN_HOST:localhost}:9411
+  sleuth:
+    sampler:
+      probability: 1 # 生产环境不需配置 默认 0.1

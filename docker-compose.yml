@@ -1,27 +1,47 @@
 version: '3'
 services:
-  user:
-    build: ./service/ec-user-service
-    ports:
-      - "8081:8081"
+  consumer-service:
+    build: ./service/ec-consumer
+    expose:
+      - "8001"
     links:
-      - eureka3
+      - discovery-server
+  edge-service:
+    build: ./service/ec-edge-service
+    expose:
+     - "8070"
+    links:
+      - discovery-server
+  product-service:
+    build: ./service/ec-product-service
+#    ports:
+#      - "8090:8090"
+    expose:
+      - "8090"
+    links:
+      - discovery-server
+      - zipkin
+  user-service:
+    build: ./service/ec-user-service
+#    ports:
+#      - "8081:8081"
+    links:
+      - discovery-server
+      - zipkin
       - mongodb
+      - admin-server
 
-  config:
+  config-server:
     build: ./ec-config
-    ports:
-      - "8888:8888"
-    environment:
-      - "spring.profiles.active=docker"
+#    ports:
+#      - "8888:8888"
     volumes:
           - "/tmp/logs:/app/logs"
     links:
-      - eureka1
-      - eureka2
-      - eureka3
+      - discovery-server
+      - mongodb
+      - admin-server
       - rabbitmq
-      - admin
   api-gateway:
      build: ./ec-api-gateway/ec-zuul
      ports:
@@ -29,56 +49,50 @@ services:
      volumes:
       - "/tmp/logs:/app/logs"
      links:
-      - eureka1
-      - eureka2
-      - eureka3
+      - discovery-server
       - zipkin
   dashboard:
      build: ./ec-dashboard
      ports:
        - "9001:9001"
      links:
-       - eureka1
-       - eureka2
-       - eureka3
-       - admin
-  turbine:
+       - discovery-server
+       - admin-server
+  turbine-stream:
      build: ./ec-turbine-stream
      ports:
        - "8099:8099"
      links:
-       - eureka1
        - discovery-server
-  admin:
+       - rabbitmq
+  admin-server:
     build: ./ec-admin
     ports:
       - "9000:9000"
     environment:
-      - "spring.profiles.active=docker"
+      - "spring.profiles.active=security"
     volumes:
       - "/tmp/logs:/app/logs"
     links:
       - discovery-server
   discovery-server:
-    build: ./ec-discovery/ec-eureka-server-ha/
-    expose:
-      - "8761"
+    build: ./ec-discovery/ec-eureka-server/
     ports:
       - "8761:8761"
     volumes:
       - "/tmp/logs:/app/logs"
     environment:
-      - "spring.profiles.active=eureka1"
+      - "EUREKA_URL=http://discovery-server:8761/eureka"
 
-  mysql:
-    image: msyql:5.7
-    volumes:
-    - ~/data/mysql/data:/var/lib/mysql
-    ports:
-    - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      TZ: Asia/Shanghai
+#  mysql:
+#    image: msyql:5.7
+#    volumes:
+#    - ~/data/mysql/data:/var/lib/mysql
+#    ports:
+#    - "3306:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 123456
+#      TZ: Asia/Shanghai
   mongodb:
     image: mongo:3.6.4
     ports:

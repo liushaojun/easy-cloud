@@ -27,6 +27,7 @@
     <module>ec-discovery</module>
     <module>ec-config</module>
     <module>service</module>
+    <module>ec-dashboard</module>
     <module>ec-api-gateway</module>
     <module>ec-common</module>
     <module>ec-turbine-stream</module>
