@@ -3,4 +3,4 @@ swagger:
 spring:
   data:
     mongodb:
-      uri: mongodb://k8s:30156/db_user
+      uri: mongodb://mongodb/db_user
