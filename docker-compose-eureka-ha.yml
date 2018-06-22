@@ -9,14 +9,14 @@ services:
       - spring.profiles.active=eureka1
   eureka1:
     image: easy-cloud/ec-eureka-ha:1.0-SNAPSHOPT
-    hostname: eureka1
+    hostname: eureka2
     ports:
       - "8762:8761"
     environment:
      - spring.profiles.active=eureka2
   eureka1:
     image: easy-cloud/ec-eureka-ha:1.0-SNAPSHOPT
-    hostname: eureka1
+    hostname: eureka3
     ports:
       - "8763:8761"
     environment:
