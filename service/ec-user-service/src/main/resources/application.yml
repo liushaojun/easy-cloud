@@ -7,8 +7,6 @@ spring:
   boot:
     admin:
       client:
-        instance:
-          service-url: http://admin-server:9000
         url:  ${ADMIN_URL:http://localhost:9000}
 
   zipkin:

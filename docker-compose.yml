@@ -1,28 +1,34 @@
 version: '3'
 services:
   consumer-service:
-    build: ./service/ec-consumer
+    image: easy-cloud/ec-consumer:1.0-SNAPSHOT
     expose:
       - "8001"
     links:
       - discovery-server
   edge-service:
-    build: ./service/ec-edge-service
+    image: easy-cloud/ec-edge-service:1.0-SNAPSHOT
+    volumes:
+      - "/tmp/logs:/app/logs"
     expose:
-     - "8070"
+      - "8070"
     links:
       - discovery-server
   product-service:
-    build: ./service/ec-product-service
+    image: easy-cloud/ec-product-service:1.0-SNAPSHOT
 #    ports:
 #      - "8090:8090"
+    volumes:
+      - "/tmp/logs:/app/logs"
     expose:
       - "8090"
     links:
       - discovery-server
       - zipkin
   user-service:
-    build: ./service/ec-user-service
+    image: easy-cloud/ec-user-service:1.0-SNAPSHOT
+    volumes:
+      - "/tmp/logs:/app/logs"
 #    ports:
 #      - "8081:8081"
     links:
@@ -32,7 +38,7 @@ services:
       - admin-server
 
   config-server:
-    build: ./ec-config
+    image: easy-cloud/ec-config:1.0-SNAPSHOT
 #    ports:
 #      - "8888:8888"
     volumes:
@@ -43,7 +49,7 @@ services:
       - admin-server
       - rabbitmq
   api-gateway:
-     build: ./ec-api-gateway/ec-zuul
+     image: easy-cloud/ec-zuul:1.0-SNAPSHOT
      ports:
       - "8080:8080"
      volumes:
@@ -52,31 +58,33 @@ services:
       - discovery-server
       - zipkin
   dashboard:
-     build: ./ec-dashboard
+     image: easy-cloud/ec-dashboard:1.0-SNAPSHOT
      ports:
        - "9001:9001"
      links:
        - discovery-server
        - admin-server
   turbine-stream:
-     build: ./ec-turbine-stream
+     image: easy-cloud/ec-turbine-stream:1.0-SNAPSHOT
      ports:
        - "8099:8099"
      links:
        - discovery-server
        - rabbitmq
   admin-server:
-    build: ./ec-admin
+    image: easy-cloud/ec-admin:1.0-SNAPSHOT
     ports:
       - "9000:9000"
     environment:
       - "spring.profiles.active=security"
+      - "EUREKA_URL=http://discovery-server:8761/eureka"
     volumes:
       - "/tmp/logs:/app/logs"
     links:
       - discovery-server
   discovery-server:
-    build: ./ec-discovery/ec-eureka-server/
+    image: easy-cloud/ec-eureka-server:1.0-SNAPSHOT
+    hostname: discovery-server
     ports:
       - "8761:8761"
     volumes:
