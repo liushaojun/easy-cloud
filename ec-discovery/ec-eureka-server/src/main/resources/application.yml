@@ -5,18 +5,17 @@ spring:
     name: discovery-server
   security:
     user:
-      name: eureka
       password: 123456
+      name: eureka
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: discovery-server
   datacenter: cloud
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      default-zone: ${EUREKA_URL:http://eureka:123456@${spring.application.name}:${server.port}/eureka/}
+      defaultZone: ${EUREKA_SERVER_URL:http://eureka:123456@localhost:${server.port}/eureka/}
   server:
     wait-time-in-ms-when-sync-empty: 0
 

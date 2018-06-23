@@ -23,7 +23,7 @@ spring:
   boot:
     admin:
       client:
-        url: ${ADMIN_URL:http://localhost:9000}
+        url: ${ADMIN_SERVER_URL:http://localhost:9000}
         username: admin
         password: 123456
 #      uri: ${SPRING_COFNIG_URI:http://localhost:9010}
@@ -34,7 +34,7 @@ spring:
 eureka:
   client:
     service-url:
-      default-zone: ${EUREKA_URL:http://eureka:123456@discovery-server:8761/eureka/}
+      defaultZone: ${EUREKA_SERVER_URL:http://eureka:123456@localhost:8761/eureka/}
   instance:
     metadata-map:
       app: ${spring.application.name}

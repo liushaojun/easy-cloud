@@ -4,7 +4,7 @@ VOLUME /tmp
 ARG JAR_FILE
 ADD ${JAR_FILE} /app.jar
 WORKDIR /app
-ENV EUREKA_URL http://discovery-server:8761/eureka
+ENV EUREKA_URL http://eureka:123456@discovery:8761/eureka
 ENV ZIPKIN_HOST zipkin
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app.jar"]

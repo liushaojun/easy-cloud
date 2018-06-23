@@ -4,16 +4,17 @@ services:
     image: easy-cloud/ec-consumer:1.0-SNAPSHOT
     expose:
       - "8001"
-    links:
-      - discovery-server
+#    links:
+#      - discovery
   edge-service:
     image: easy-cloud/ec-edge-service:1.0-SNAPSHOT
     volumes:
       - "/tmp/logs:/app/logs"
     expose:
       - "8070"
-    links:
-      - discovery-server
+#    links:
+#      - discovery
+#      - admin-server
   product-service:
     image: easy-cloud/ec-product-service:1.0-SNAPSHOT
 #    ports:
@@ -22,20 +23,21 @@ services:
       - "/tmp/logs:/app/logs"
     expose:
       - "8090"
-    links:
-      - discovery-server
-      - zipkin
+#    links:
+#      - discovery
+#      - zipkin
+
   user-service:
     image: easy-cloud/ec-user-service:1.0-SNAPSHOT
     volumes:
       - "/tmp/logs:/app/logs"
 #    ports:
 #      - "8081:8081"
-    links:
-      - discovery-server
-      - zipkin
-      - mongodb
-      - admin-server
+#    links:
+#      - discovery
+#      - zipkin
+#      - mongodb
+#      - admin-server
 
   config-server:
     image: easy-cloud/ec-config:1.0-SNAPSHOT
@@ -43,54 +45,58 @@ services:
 #      - "8888:8888"
     volumes:
           - "/tmp/logs:/app/logs"
-    links:
-      - discovery-server
-      - mongodb
-      - admin-server
-      - rabbitmq
+#    links:
+#      - discovery
+#      - mongodb
+#      - admin-server
+#      - rabbitmq
+
   api-gateway:
-     image: easy-cloud/ec-zuul:1.0-SNAPSHOT
-     ports:
+    image: easy-cloud/ec-zuul:1.0-SNAPSHOT
+    ports:
       - "8080:8080"
-     volumes:
+    volumes:
       - "/tmp/logs:/app/logs"
-     links:
-      - discovery-server
-      - zipkin
+#    links:
+#      - discovery
+#      - zipkin
+
   dashboard:
      image: easy-cloud/ec-dashboard:1.0-SNAPSHOT
      ports:
        - "9001:9001"
-     links:
-       - discovery-server
-       - admin-server
+#     links:
+#       - discovery
+#       - admin-server
+
   turbine-stream:
      image: easy-cloud/ec-turbine-stream:1.0-SNAPSHOT
      ports:
        - "8099:8099"
-     links:
-       - discovery-server
-       - rabbitmq
+#     links:
+#       - discovery
+#       - rabbitmq
+
+
   admin-server:
     image: easy-cloud/ec-admin:1.0-SNAPSHOT
     ports:
       - "9000:9000"
     environment:
       - "spring.profiles.active=security"
-      - "EUREKA_URL=http://discovery-server:8761/eureka"
+      - "EUREKA_SERVER_URL=http://eureka:123456@discovery:8761/eureka"
     volumes:
       - "/tmp/logs:/app/logs"
-    links:
-      - discovery-server
-  discovery-server:
+#    links:
+#      - discovery
+
+  discovery:
     image: easy-cloud/ec-eureka-server:1.0-SNAPSHOT
-    hostname: discovery-server
     ports:
       - "8761:8761"
     volumes:
       - "/tmp/logs:/app/logs"
-    environment:
-      - "EUREKA_URL=http://discovery-server:8761/eureka"
+
 
 #  mysql:
 #    image: msyql:5.7

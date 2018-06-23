@@ -23,7 +23,7 @@ public class AdminServerApplication {
     SpringApplication.run(AdminServerApplication.class, args);
   }
 
-  @Profile("!prod")
+  @Profile("!security")
   @Configuration
   public static class SecurityPermitAllConfig extends WebSecurityConfigurerAdapter {
 
@@ -33,7 +33,7 @@ public class AdminServerApplication {
           .and().csrf().disable();
     }
   }
-  @Profile("prod")
+  @Profile("security")
   @Configuration
   public static class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
 

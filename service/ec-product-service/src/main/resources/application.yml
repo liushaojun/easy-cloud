@@ -1,7 +1,6 @@
 server:
   port: 8090
 spring:
-
   jackson:
     time-zone: GMT+8
   datasource:
@@ -21,11 +20,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
-swagger:
-  exclude-path: /error,
-
   zipkin:
     base-url: http://${ZIPKIN_HOST:localhost}:9411
   sleuth:
     sampler:
-      probability: 1 # 生产环境不需配置 默认 0.1
+      probability: 1
+swagger:
+  exclude-path: /error,

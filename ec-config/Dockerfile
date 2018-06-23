@@ -5,8 +5,8 @@ ARG JAR_FILE
 ADD ${JAR_FILE} /app.jar
 EXPOSE 8888
 WORKDIR /app
-ENV EUREKA_URL http://discovery-server:8761/eureka/
-ENV ADMIN_URL http://admin-server:9000
+ENV EUREKA_SERVER_URL http://eureka:123456@discovery:8761/eureka/
+ENV ADMIN_SERVER_URL http://admin-server:9000
 ENV RABBITMQ_HOST rabbitmq
 
 ENTRYPOINT ["java","-jar","/app.jar"]

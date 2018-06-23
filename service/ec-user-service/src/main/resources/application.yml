@@ -7,8 +7,9 @@ spring:
   boot:
     admin:
       client:
-        url:  ${ADMIN_URL:http://localhost:9000}
-
+        url: ${ADMIN_SERVER_URL:http://localhost:9000}
+        username: admin
+        password: 123456
   zipkin:
     base-url: http://${ZIPKIN_HOST:localhost}:9411
   sleuth:
