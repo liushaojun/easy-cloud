@@ -9,4 +9,4 @@ branches:
 services:
 - docker
 script:
-- build.sh
+- mvn clean package -Ddockerfile.skip
