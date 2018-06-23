@@ -8,3 +8,4 @@ branches:
     - master
 install:
 - mvn clean install -DskipTests -Ddockerfile.skip
+script: true
