@@ -6,7 +6,5 @@ jdk:
 branches:
   only:
     - master
-services:
-- docker
 script:
 - mvn clean package -Ddockerfile.skip
