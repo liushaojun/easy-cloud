@@ -7,4 +7,4 @@ branches:
   only:
     - master
 script:
-- mvn clean package -Ddockerfile.skip
+- mvn clean package -DskipTests -Ddockerfile.skip
