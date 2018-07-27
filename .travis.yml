@@ -6,7 +6,6 @@ jdk:
 branches:
   only:
     - master
-services:
-- docker
-script:
-- build.sh
+install:
+- mvn clean install -DskipTests -Ddockerfile.skip
+script: true

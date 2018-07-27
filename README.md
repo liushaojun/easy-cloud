@@ -1,5 +1,11 @@
 # easy-cloud
+
+[![Build Status](https://www.travis-ci.org/liushaojun/easy-cloud.svg?branch=master)](https://www.travis-ci.org/liushaojun/easy-cloud.svg?branch=master)
+![Easy Cloud](https://img.shields.io/badge/Easy%20Cloud-v1.0-blue.svg)
+
 > `Easy Cloud` 基于 `Spring Cloud Finchley` ,`Spring Boot 2.x` 搭建的简单微服务示例。
+
+
 
 ## 源码地址
 [github](http://github.com/liushaojun/easy-cloud)
